@@ -4,7 +4,8 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --env-file .env.dev src/index.js",
+    "start": "node src/index.js",
+    "dev": "nodemon --env-file .env.dev src/index.js",
     "seed": "node --env-file .env.dev src/seed/seed.js",
     "test": "node --env-file .env.test ./node_modules/.bin/mocha --timeout 15000 --exit 'tests/**/*.test.js'"
   },
