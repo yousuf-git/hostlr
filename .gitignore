@@ -1,0 +1,4 @@
+# Ignore documentation directories
+/docs/
+**/docs/
+**/docs/**

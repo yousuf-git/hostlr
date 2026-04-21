@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HOSTLR API — Health</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: #1a1d27;
+      border: 1px solid #2a2d3a;
+      border-radius: 20px;
+      padding: 48px 40px 40px;
+      width: 100%;
+      max-width: 580px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .brand-dot {
+      width: 36px;
+      height: 36px;
+      background: #C4522A;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .brand-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .brand-name span { color: #C4522A; }
+
+    .headline {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .sub {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 36px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    .pill.ok  { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
+    .pill.err { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+
+    .pill-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .metric {
+      background: #12151f;
+      border: 1px solid #2a2d3a;
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+
+    .metric-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #4b5563;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .metric-value.ok  { color: #34d399; }
+    .metric-value.err { color: #f87171; }
+    .metric-value.dim { color: #9ca3af; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #2a2d3a;
+      margin: 24px 0;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #4b5563;
+    }
+
+    #live-time { color: #6b7280; }
+
+    @media (max-width: 480px) {
+      .card { padding: 32px 20px 24px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">
+      <div class="brand-dot">◆</div>
+      <div class="brand-name">HOST<span>LR</span> API</div>
+    </div>
+
+    <h1 class="headline">System Status</h1>
+    <p class="sub">Realtime operational metrics</p>
+
+    <div class="pill {{STATUS_CLASS}}">
+      <span class="pill-dot"></span>
+      {{STATUS_TEXT}}
+    </div>
+
+    <div class="grid">
+      <div class="metric">
+        <div class="metric-label">Database</div>
+        <div class="metric-value {{DB_CLASS}}">{{DB_STATUS}}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Environment</div>
+        <div class="metric-value dim">{{ENV}}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Uptime</div>
+        <div class="metric-value">{{UPTIME}}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Memory Used</div>
+        <div class="metric-value">{{MEMORY_USED}} MB</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Heap Total</div>
+        <div class="metric-value dim">{{HEAP_TOTAL}} MB</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Node.js</div>
+        <div class="metric-value dim">{{NODE_VERSION}}</div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="footer">
+      <span>Developed by <strong style="color:#C4522A">M. Yousuf</strong></span>
+      <span id="live-time">{{TIMESTAMP}}</span>
+    </div>
+  </div>
+
+  <script>
+    // Keep the timestamp ticking in realtime
+    const el = document.getElementById('live-time')
+    function tick() {
+      el.textContent = new Date().toLocaleString('en-PK', {
+        dateStyle: 'medium', timeStyle: 'medium', hour12: true
+      })
+    }
+    tick()
+    setInterval(tick, 1000)
+  </script>
+</body>
+</html>
