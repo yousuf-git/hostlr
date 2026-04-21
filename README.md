@@ -152,5 +152,7 @@ npm run dev
 
 ## License
 
-This repository contains project-specific code plus a reference boilerplate. Review each subproject for its own license and usage terms before redistribution.
+This project is licensed under the **Attribution 4.0 International (CC BY 4.0)** license. You are free to use, modify, and distribute this code for any purpose, provided you give appropriate credit to the original author(s).
+
+For details, see [Creative Commons BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
