@@ -25,7 +25,6 @@ HOSTLR is a full-stack hostel discovery and reservation platform built with a ro
 hostlr/
 ├── api.hostlr.com/         # Production backend API (Express + MongoDB + Socket.IO)
 ├── web.hostlr.com/         # Frontend application (React + Vite + Tailwind)
-├── api.boilerplate.com/    # Reference backend boilerplate
 ├── PLAN.md                 # Build/migration planning notes
 ├── PROMPT.md               # Product and scope prompt
 └── TEST.md                 # Test strategy notes
