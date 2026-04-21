@@ -1,0 +1,20 @@
+# Allow social media crawlers for OG tag scraping
+User-agent: facebookexternalhit
+Disallow:
+
+User-agent: Twitterbot
+Disallow:
+
+User-agent: whatsapp
+Disallow:
+
+User-agent: Slurp
+Disallow:
+
+User-agent: Googlebot
+Disallow:
+
+# Disallow everything else by default (optional)
+User-agent: *
+Disallow: /admin
+Disallow: /api
