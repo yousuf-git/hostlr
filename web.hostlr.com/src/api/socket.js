@@ -10,7 +10,8 @@ export const getSocket = (token) => {
   }
   if (!socket) {
     currentToken = token
-    socket = io('http://localhost:4000', {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+    socket = io(apiUrl, {
       auth: { token },
       autoConnect: true,
     })
